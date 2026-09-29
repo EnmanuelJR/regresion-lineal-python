@@ -4,6 +4,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error
 
 
 # Variable donde guardaremos el dataset
@@ -130,6 +131,12 @@ def realizar_regresion():
     modelo = LinearRegression()
     modelo.fit(X, y)
 
+    # Realizar predicciones
+    y_pred = modelo.predict(X)
+    # Calcular error de la regresión
+    mse = mean_squared_error(y, y_pred)
+    rmse = mse ** 0.5
+
     # Obtener resultados
     pendiente = modelo.coef_[0]
     intercepto = modelo.intercept_
@@ -146,14 +153,14 @@ def realizar_regresion():
             f"Pendiente: {pendiente:.4f}\n"
             f"Intercepto: {intercepto:.4f}\n"
             f"R²: {r2:.4f}\n\n"
+            f"Error MSE: {mse:.4f}\n"
+            f"Error RMSE: {rmse:.4f}\n\n"
             f"Ecuación:\n"
             f"{variable_y} = {intercepto:.4f} + "
             f"({pendiente:.4f} × {variable_x})"
         )
     )
 
-    # Realizar predicciones
-    y_pred = modelo.predict(X)
 
     # Crear gráfica
     plt.figure(figsize=(10, 6))
